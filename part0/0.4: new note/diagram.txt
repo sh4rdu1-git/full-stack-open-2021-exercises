@@ -1,0 +1,37 @@
+ browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+server->browser: HTML code
+
+note over browser:
+Broswer recieves URL-redirect from server.
+Browser reloads the page,
+leading to 3 more HTTP requests
+end note
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server-->browser: main.css
+
+note over browser:
+Browser receives main.css file
+containing styling code
+end note over
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+server-->browser: main.js
+
+note over browser:
+Browser receives main.js file
+containing code to parse data
+end note over
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server-->browser: data.json
+
+note over browser:
+Browser receives data.json file
+containing the actual data
+end note over
+
+note over browser:
+The browser executes the function
+that renders notes to the display
+end note
