@@ -7,12 +7,14 @@ const Header = (props) => {
 }
 
 const Part = (props) => {
+  // console.log("Part: ", props);
   return (
     <p>{props.info.name} {props.info.exercises}</p>
   )
 }
 
 const Content = (props) => {
+  // console.log("Content: ", props);
   return (
     <>
       <Part info={props.parts[0]} />
@@ -23,6 +25,7 @@ const Content = (props) => {
 }
 
 const Total = (props) => {
+  // console.log("Total: ", props);
   return (
     <p>Number of exercises {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}</p>
   )
@@ -30,27 +33,29 @@ const Total = (props) => {
 
 const App = () => {
   const course = 'Half Stack Application Development'
-  const part1 = {
-    name: 'Fundamentals of React',
-    exercises: 10,
-  }
-  const part2 = {
-    name: 'Using props to pass data',
-    exercises: 7,
-  }
-  const part3 = {
-    name: 'State of a component',
-    exercises: 14,
-  }
+  const parts = [
+    {
+      name: 'Fundamentals of React',
+      exercises: 10,
+    },
+    {
+      name: 'Using props to pass data',
+      exercises: 7,
+    },
+    {
+      name: 'State of a component',
+      exercises: 14,
+    }
+  ]
 
   return (
     <div>
       {/* For <Header />, passing courseName as prop */}
       <Header courseName={course} />
-      {/* For <Content />, passing parts array as prop */}
-      <Content parts={[part1, part2, part3]} />
-      {/* For <Total />, passing parts array as prop */}
-      <Total parts={[part1, part2, part3]} />
+      {/* For <Content />, passing parts as array of objects */}
+      <Content parts={parts} />
+      {/* For <Total />, passing parts as array of objects */}
+      <Total parts={parts} />
     </div>
   )
 }
