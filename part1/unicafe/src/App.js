@@ -10,9 +10,12 @@ const Button = ({ handleClick, text }) => {
 }
 
 // Individual Statistic component
-const Statistic = ({ text, value }) => {
+const Statistic = ({ statName, value }) => {
   return (
-    <p>{text} {value}</p>
+    <tr>
+      <td>{statName}</td>
+      <td>{value}</td>
+    </tr>
   )
 }
 
@@ -34,12 +37,17 @@ const Statistics = ({ good, neutral, bad }) => {
   return (
     <div>
       <h1>Statistics</h1>
-      <Statistic text="Good" value={good} />
-      <Statistic text="Neutral" value={neutral} />
-      <Statistic text="Bad" value={bad} />
-      <Statistic text="All" value={total} />
-      <Statistic text="Average" value={average} />
-      <Statistic text="Positive" value={percentPositive} />
+      {/* Displaying statistics in tabular form */}
+      <table>
+        <tbody>
+          <Statistic statName="Good" value={good} />
+          <Statistic statName="Neutral" value={neutral} />
+          <Statistic statName="Bad" value={bad} />
+          <Statistic statName="All" value={total} />
+          <Statistic statName="Average" value={average} />
+          <Statistic statName="Positive" value={percentPositive} />
+        </tbody>
+      </table>
     </div>
   )
 }
