@@ -2,11 +2,9 @@ import React, { useState } from 'react'
 
 const Button = ({ handleClick, text }) => {
   return (
-    <div>
-      <button onClick={handleClick}>
-        {text}
-      </button>
-    </div>
+    <button onClick={handleClick}>
+      {text}
+    </button>
   )
 }
 
@@ -37,12 +35,28 @@ const App = () => {
     setVotes(vote)
   }
 
+  const getMaxVotesIndex = () => {
+    let maxVotes = 0
+    let indexOfMaxVotes = 0
+    votes.forEach((item, index) => {
+      if (item > maxVotes) {
+        maxVotes = item // The max number of votes in 'votes' array
+        indexOfMaxVotes = index // The index of max number of votes in 'votes' array
+      }
+    })
+    return indexOfMaxVotes
+  }
+
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
       <p>This anecdote has {votes[selected]} votes.</p>
       <Button handleClick={handleRandomizer} text="Randomize" />
       <Button handleClick={handleVote} text="Vote" />
+      <h1>Most voted anecdote</h1>
+      <p>{anecdotes[getMaxVotesIndex()]}</p>
+      <p>This anecdote has {votes[getMaxVotesIndex()]} votes.</p>
     </div>
   )
 }
