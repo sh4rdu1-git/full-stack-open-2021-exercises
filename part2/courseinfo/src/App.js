@@ -27,11 +27,11 @@ const Content = ({ courseParts }) => {
 // TotalExercises component
 const TotalExercises = ({ course }) => {
   // using the reduce function on 'parts' array of the object in 'course' constant.
-  // 'total' variable stores the added value of the individual 'part.exercises' 
-  // inside 'parts' array. The final 'total' output is stored as 'sum'.
-  const sum = course.parts.reduce((total, part) => total + part.exercises, 0)
+  // 'sum' variable stores the added value of the individual 'part.exercises' 
+  // inside 'parts' array. The final 'sum' output is stored as 'total'.
+  const total = course.parts.reduce((sum, part) => sum + part.exercises, 0)
   return (
-    <strong>total of {sum} exercises</strong>
+    <strong>total of {total} exercises</strong>
   )
 }
 
