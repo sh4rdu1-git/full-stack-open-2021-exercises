@@ -16,12 +16,20 @@ const App = () => {
   // adds new contact to array 'persons'
   const handleAddPerson = (event) => {
     event.preventDefault()
-    const newPersonObject = {
-      id: persons.length + 1,
-      name: newName
+
+    // check for person already existing in phonebook
+    // if exists; show alert and don't add to phonebook
+    const found = persons.find(person => person.name === newName)
+    if (found) {
+      alert(`${newName} is already present in phonebook`)
+    } else {
+      const newPersonObject = {
+        id: persons.length + 1,
+        name: newName
+      }
+      setPersons(persons.concat(newPersonObject))
+      setNewName('')
     }
-    setPersons(persons.concat(newPersonObject))
-    setNewName('')
   }
 
   return (
