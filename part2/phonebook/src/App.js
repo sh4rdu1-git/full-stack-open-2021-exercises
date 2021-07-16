@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import SearchPerson from './components/SearchPerson'
+import AddPerson from './components/AddPerson'
 
 const App = () => {
   // contacts are stored in array 'persons'
@@ -57,22 +58,14 @@ const App = () => {
     <div>
       <h1>Phonebook</h1>
       <SearchPerson searchFor={search} handleInputChange={handleSearchChange} />
-      {/* <div>
-        <h2>Search contact</h2>
-        <input value={search} onChange={handleSearchChange} />
-      </div> */}
-      <h2>Add a new contact</h2>
-      <form>
-        <div>
-          name: <input value={newName} onChange={handleNameTextChange} />
-        </div>
-        <div>
-          phone: <input value={newPhone} onChange={handlePhoneNumberChange} />
-        </div>
-        <div>
-          <button type="submit" onClick={handleAddPerson}>add</button>
-        </div>
-      </form>
+      <AddPerson
+        newName={newName}
+        newPhone={newPhone}
+        handleNameChange={handleNameTextChange}
+        handlePhoneChange={handlePhoneNumberChange}
+        handleAddPerson={handleAddPerson}
+      />
+      
       <h2>Numbers</h2>
       {search === ''
         ? persons.map(person => <p key={person.name}>{person.name}: {person.phone}</p>) // if search is empty, show all
