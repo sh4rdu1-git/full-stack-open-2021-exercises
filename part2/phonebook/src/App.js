@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 
+import SearchPerson from './components/SearchPerson'
+
 const App = () => {
   // contacts are stored in array 'persons'
   const [persons, setPersons] = useState([
@@ -53,11 +55,12 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
-      <div>
+      <h1>Phonebook</h1>
+      <SearchPerson searchFor={search} handleInputChange={handleSearchChange} />
+      {/* <div>
         <h2>Search contact</h2>
         <input value={search} onChange={handleSearchChange} />
-      </div>
+      </div> */}
       <h2>Add a new contact</h2>
       <form>
         <div>
