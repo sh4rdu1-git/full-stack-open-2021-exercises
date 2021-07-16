@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import SearchPerson from './components/SearchPerson'
 import AddPerson from './components/AddPerson'
+import Numbers from './components/Numbers'
 
 const App = () => {
   // contacts are stored in array 'persons'
@@ -65,12 +66,7 @@ const App = () => {
         handlePhoneChange={handlePhoneNumberChange}
         handleAddPerson={handleAddPerson}
       />
-      
-      <h2>Numbers</h2>
-      {search === ''
-        ? persons.map(person => <p key={person.name}>{person.name}: {person.phone}</p>) // if search is empty, show all
-        : searchPersons.map(person => <p key={person.name}>{person.name}: {person.phone}</p>) // else show searched names
-      }
+      <Numbers search={search} persons={persons} searchedPersons={searchPersons} />
     </div>
   )
 }
