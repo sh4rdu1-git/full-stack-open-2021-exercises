@@ -9,12 +9,12 @@ const Numbers = ({ search, persons, searchedPersons }) => {
             {search === ''
                 ? persons.map(person => (
                     <p key={person.name}>
-                        <Person personName={person.name} personPhone={person.phone} />
+                        <Person personName={person.name} personPhone={person.number} />
                     </p>
                 ))
                 : searchedPersons.map(person => (
                     <p key={person.name}>
-                        <Person personName={person.name} personPhone={person.phone} />
+                        <Person personName={person.name} personPhone={person.number} />
                     </p>
                 ))
             }

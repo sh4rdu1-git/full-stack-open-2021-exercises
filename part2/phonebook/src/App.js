@@ -1,23 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import SearchPerson from './components/SearchPerson'
 import AddPerson from './components/AddPerson'
 import Numbers from './components/Numbers'
+import axios from 'axios'
 
 const App = () => {
   // contacts are stored in array 'persons'
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', phone: '040-123456' },
-    { name: 'Ada Lovelace', phone: '39-44-5323523' },
-    { name: 'Dan Abramov', phone: '12-43-234345' },
-    { name: 'Mary Poppins', phone: '39-23-6423122' },
-  ])
+  const [persons, setPersons] = useState([]) // for data
 
   const [newName, setNewName] = useState('') // for name text input
   const [newPhone, setNewPhone] = useState('') // for phone number input
 
   const [search, setSearch] = useState('')
   const [searchPersons, setSearchPersons] = useState(persons)
+
+  useEffect(() => {
+    // fetch data from json-server
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        setPersons(response.data)
+        // console.log(persons)
+      })
+  }, [])
 
   // updates state on every change in input
   const handleNameTextChange = (e) => setNewName(e.target.value)
