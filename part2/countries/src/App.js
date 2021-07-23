@@ -1,23 +1,80 @@
-import logo from './logo.svg';
-import './App.css';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import Country from "./components/Country";
 
-function App() {
+const App = () => {
+  // state to store countries data
+  const [countries, setCountries] = useState([])
+
+  // state to store search query
+  const [query, setQuery] = useState('')
+
+  // state to store filtered countries
+  const [countriesFilter, setCountriesFilter] = useState([])
+
+  // state to store countries to be displayed
+  const [showCountry, setShowCountry] = useState({})
+
+  // fetching countries data from REST api
+  const getCountryData = () => {
+    axios
+      .get('https://restcountries.eu/rest/v2/all')
+      .then(response => {
+        // console.log(response.data);
+        setCountries(response.data)
+      })
+  }
+
+  useEffect(getCountryData, [])
+
+  useEffect(() => {
+    setShowCountry(
+      countriesFilter.length === 1
+        ? { ...countriesFilter[0] }
+        : {}
+    )
+  }, [countriesFilter])
+
+  // handle search query
+  const handleSearchQuery = (e) => {
+    setQuery(e.target.value)
+    // filter the countries
+    setCountriesFilter(
+      countries.filter(
+        (country) =>
+          country.name.toLowerCase().search(e.target.value.toLowerCase()) !== -1
+      )
+    )
+    // console.log(countriesFilter);
+  }
+
+  // display countries
+  const displayCountriesNames = () => {
+    return countriesFilter.map((country) => (
+      <p key={country.numericCode}>
+        {country.name}
+      </p>
+    ))
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <label htmlFor="search">Find countries </label>
+      <input type="text"
+        value={query}
+        name="search"
+        onChange={handleSearchQuery}
+      />
+
+      {/* display a list of countries matching the search query */}
+      {countriesFilter.length > 10
+        ? <p>Too many matches, specify another filter</p>
+        : countriesFilter.length > 1
+          // if more than one country found then display their names
+          ? displayCountriesNames()
+          // if single country found then display country data
+          : showCountry.name && <Country data={showCountry} />
+      }
     </div>
   );
 }
