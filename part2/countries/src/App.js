@@ -53,6 +53,8 @@ const App = () => {
     return countriesFilter.map((country) => (
       <p key={country.numericCode}>
         {country.name}
+        {/* button to toggle show country data */}
+        <button onClick={() => setShowCountry(country)}>show</button>
       </p>
     ))
   }
@@ -75,6 +77,9 @@ const App = () => {
           // if single country found then display country data
           : showCountry.name && <Country data={showCountry} />
       }
+      
+      {/* when show button is pressed, display the data of that country below */}
+      {showCountry.name && <Country data={showCountry} />}
     </div>
   );
 }
