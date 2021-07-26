@@ -12,7 +12,7 @@ const App = () => {
   // state to store filtered countries
   const [countriesFilter, setCountriesFilter] = useState([])
 
-  // state to store countries to be displayed
+  // state to store countries to be shown
   const [showCountry, setShowCountry] = useState({})
 
   // fetching countries data from REST api
@@ -69,16 +69,11 @@ const App = () => {
       />
 
       {/* display a list of countries matching the search query */}
-      {countriesFilter.length > 10
-        ? <p>Too many matches, specify another filter</p>
-        : countriesFilter.length > 1
-          // if more than one country found then display their names
-          ? displayCountriesNames()
-          // if single country found then display country data
-          : showCountry.name && <Country data={showCountry} />
-      }
-      
-      {/* when show button is pressed, display the data of that country below */}
+      {countriesFilter.length > 10 ? (
+        <p>Too many matches</p>
+      ) : (
+        displayCountriesNames()
+      )}
       {showCountry.name && <Country data={showCountry} />}
     </div>
   );
