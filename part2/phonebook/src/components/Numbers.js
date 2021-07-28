@@ -7,13 +7,13 @@ const Numbers = ({ search, persons, searchedPersons }) => {
         <div>
             <h2>Numbers</h2>
             {search === ''
-                ? persons.map(person => (
-                    <p key={person.name}>
+                ? persons.map((person, i) => (
+                    <p key={i}>
                         <Person personName={person.name} personPhone={person.number} />
                     </p>
                 ))
-                : searchedPersons.map(person => (
-                    <p key={person.name}>
+                : searchedPersons.map((person, i) => (
+                    <p key={i}>
                         <Person personName={person.name} personPhone={person.number} />
                     </p>
                 ))

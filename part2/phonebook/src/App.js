@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 
+import phonebookService from './services/phonebook'
+
 import SearchPerson from './components/SearchPerson'
 import AddPerson from './components/AddPerson'
 import Numbers from './components/Numbers'
-import axios from 'axios'
 
 const App = () => {
   // contacts are stored in array 'persons'
@@ -17,11 +18,11 @@ const App = () => {
 
   useEffect(() => {
     // fetch data from json-server
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
-        // console.log(persons)
+    phonebookService
+      .getAllContacts()
+      .then(initialContacts => {
+        // console.log(initialContacts);
+        setPersons(initialContacts)
       })
   }, [])
 
@@ -42,7 +43,6 @@ const App = () => {
   // Add new contact
   const handleAddPerson = (e) => {
     e.preventDefault()
-
     // check for person already existing in phonebook
     // if exists; show alert and don't add to phonebook
     const found = persons.find(person => person.name === newName)
@@ -51,13 +51,19 @@ const App = () => {
       alert(`${newName} is already present in phonebook`)
     } else {
       const newPersonObject = {
-        id: persons.length + 1,
         name: newName,
-        phone: newPhone,
+        number: newPhone,
       }
-      setPersons(persons.concat(newPersonObject))
-      setNewName('')
-      setNewPhone('')
+
+      // Send HTTP POST request with contact object to server
+      phonebookService
+        .createContact(newPersonObject)
+        .then(returnedContact => {
+          // console.log(returnedContact)
+          setPersons(persons.concat(returnedContact))
+          setNewName('')
+          setNewPhone('')
+        })
     }
   }
 
