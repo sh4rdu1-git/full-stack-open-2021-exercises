@@ -5,6 +5,7 @@ import phonebookService from './services/phonebook'
 import SearchPerson from './components/SearchPerson'
 import AddPerson from './components/AddPerson'
 import Numbers from './components/Numbers'
+import Notification from './components/Notification'
 
 const App = () => {
   // contacts are stored in array 'persons'
@@ -13,6 +14,7 @@ const App = () => {
   const [newPhone, setNewPhone] = useState('') // for phone number input
   const [search, setSearch] = useState('')
   const [searchPersons, setSearchPersons] = useState(persons)
+  const [message, setMessage] = useState(null)
 
   useEffect(() => {
     // fetch data from json-server
@@ -46,7 +48,13 @@ const App = () => {
     phonebookService
       .updateContact(contact.id, changedContact)
       .then(updatedContact => {
-        setPersons(persons.map(c => c.id !== contact.id ? c : updatedContact))
+        setPersons(persons.map(c => c.id !== contact.id
+          ? c
+          : updatedContact))
+        setNewName('')
+        setNewPhone('')
+        setMessage(`Updated ${contact.name}`)
+        setTimeout(() => setMessage(null), 5000)
       })
   }
 
@@ -74,6 +82,8 @@ const App = () => {
           setPersons(persons.concat(returnedContact))
           setNewName('')
           setNewPhone('')
+          setMessage(`Added ${returnedContact.name}`)
+          setTimeout(() => setMessage(null), 5000)
         })
     }
   }
@@ -81,6 +91,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
+      <Notification message={message} />
       <SearchPerson searchFor={search} handleInputChange={handleSearchChange} />
       <AddPerson
         newName={newName}
@@ -95,6 +106,7 @@ const App = () => {
         searchedPersons={searchPersons}
         setPersons={setPersons}
         setSearchPersons={setSearchPersons}
+        setMessage={setMessage}
       />
     </div>
   )

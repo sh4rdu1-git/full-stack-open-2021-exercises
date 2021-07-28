@@ -4,7 +4,12 @@ import phonebookService from '../services/phonebook'
 
 import Person from './Person'
 
-const Numbers = ({ search, persons, searchedPersons, setPersons, setSearchPersons }) => {
+const Numbers = ({ search,
+    persons,
+    searchedPersons,
+    setPersons,
+    setSearchPersons,
+    setMessage }) => {
 
     // Delete a contact from server
     const handleDeleteContact = (person) => {
@@ -16,6 +21,8 @@ const Numbers = ({ search, persons, searchedPersons, setPersons, setSearchPerson
             // Filter out the deleted contact from the states
             setPersons(persons.filter(item => item !== person))
             setSearchPersons(searchedPersons.filter(item => item !== person))
+            setMessage(`Deleted ${person.name}`)
+            setTimeout(() => setMessage(null), 5000)
         }
     }
 
