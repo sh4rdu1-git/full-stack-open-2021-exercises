@@ -1,7 +1,6 @@
 import React from 'react'
 
 import phonebookService from '../services/phonebook'
-
 import Person from './Person'
 
 const Numbers = ({ search,
@@ -9,7 +8,7 @@ const Numbers = ({ search,
     searchedPersons,
     setPersons,
     setSearchPersons,
-    setMessage }) => {
+    showNotification }) => {
 
     // Delete a contact from server
     const handleDeleteContact = (person) => {
@@ -21,8 +20,7 @@ const Numbers = ({ search,
             // Filter out the deleted contact from the states
             setPersons(persons.filter(item => item !== person))
             setSearchPersons(searchedPersons.filter(item => item !== person))
-            setMessage(`Deleted ${person.name}`)
-            setTimeout(() => setMessage(null), 5000)
+            showNotification(`Deleted contact: ${person.name}`)
         }
     }
 

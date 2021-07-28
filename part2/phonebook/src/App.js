@@ -15,6 +15,7 @@ const App = () => {
   const [search, setSearch] = useState('')
   const [searchPersons, setSearchPersons] = useState(persons)
   const [message, setMessage] = useState(null)
+  const [notificationType, setNotificationType] = useState('')
 
   useEffect(() => {
     // fetch data from json-server
@@ -28,6 +29,16 @@ const App = () => {
   // updates state on every change in input
   const handleNameTextChange = (e) => setNewName(e.target.value)
   const handlePhoneNumberChange = (e) => setNewPhone(e.target.value)
+
+  // Notifications
+  const showNotification = (message, type) => {
+    setMessage(message)
+    setNotificationType(type)
+    setTimeout(() => {
+      setMessage(null)
+      setNotificationType('')
+    }, 5000)
+  }
 
   // Search phonebook
   const handleSearchChange = (e) => {
@@ -55,6 +66,10 @@ const App = () => {
         setNewPhone('')
         setMessage(`Updated ${contact.name}`)
         setTimeout(() => setMessage(null), 5000)
+      })
+      .catch(() => {
+        const msg = `Information of ${contact.name} has already been removed from the server`
+        showNotification(msg, 'error')
       })
   }
 
@@ -85,13 +100,17 @@ const App = () => {
           setMessage(`Added ${returnedContact.name}`)
           setTimeout(() => setMessage(null), 5000)
         })
+        .catch(() => {
+          const msg = `Error while adding ${newPersonObject.name}`
+          showNotification(msg, 'error')
+        })
     }
   }
 
   return (
     <div>
       <h1>Phonebook</h1>
-      <Notification message={message} />
+      <Notification message={message} type={notificationType} />
       <SearchPerson searchFor={search} handleInputChange={handleSearchChange} />
       <AddPerson
         newName={newName}
@@ -106,7 +125,7 @@ const App = () => {
         searchedPersons={searchPersons}
         setPersons={setPersons}
         setSearchPersons={setSearchPersons}
-        setMessage={setMessage}
+        showNotification={showNotification}
       />
     </div>
   )

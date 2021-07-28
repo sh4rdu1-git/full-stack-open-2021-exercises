@@ -1,6 +1,15 @@
-.message {
+.message-normal {
   color: darkgreen;
   background-color: lightgreen;
+  font-size: 16;
+  padding: 10px;
+  border-style: solid;
+  border-radius: 5px;
+}
+
+.message-error {
+  color: red;
+  background-color: lightpink;
   font-size: 16;
   padding: 10px;
   border-style: solid;
