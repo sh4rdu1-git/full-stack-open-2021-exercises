@@ -9,10 +9,8 @@ import Numbers from './components/Numbers'
 const App = () => {
   // contacts are stored in array 'persons'
   const [persons, setPersons] = useState([]) // for data
-
   const [newName, setNewName] = useState('') // for name text input
   const [newPhone, setNewPhone] = useState('') // for phone number input
-
   const [search, setSearch] = useState('')
   const [searchPersons, setSearchPersons] = useState(persons)
 
@@ -46,7 +44,6 @@ const App = () => {
     // check for person already existing in phonebook
     // if exists; show alert and don't add to phonebook
     const found = persons.find(person => person.name === newName)
-
     if (found) {
       alert(`${newName} is already present in phonebook`)
     } else {
@@ -54,7 +51,6 @@ const App = () => {
         name: newName,
         number: newPhone,
       }
-
       // Send HTTP POST request with contact object to server
       phonebookService
         .createContact(newPersonObject)
@@ -78,7 +74,13 @@ const App = () => {
         handlePhoneChange={handlePhoneNumberChange}
         handleAddPerson={handleAddPerson}
       />
-      <Numbers search={search} persons={persons} searchedPersons={searchPersons} />
+      <Numbers
+        search={search}
+        persons={persons}
+        searchedPersons={searchPersons}
+        setPersons={setPersons}
+        setSearchPersons={setSearchPersons}
+      />
     </div>
   )
 }
