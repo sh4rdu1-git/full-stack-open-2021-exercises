@@ -19,7 +19,6 @@ const App = () => {
     phonebookService
       .getAllContacts()
       .then(initialContacts => {
-        // console.log(initialContacts);
         setPersons(initialContacts)
       })
   }, [])
@@ -38,14 +37,30 @@ const App = () => {
     )
   }
 
+  // Helper function for updating contact number
+  // called inside function handleAddPerson
+  const updateContact = () => {
+    const contact = persons.find(c => c.name === newName)
+    const changedContact = { ...contact, number: newPhone }
+
+    phonebookService
+      .updateContact(contact.id, changedContact)
+      .then(updatedContact => {
+        setPersons(persons.map(c => c.id !== contact.id ? c : updatedContact))
+      })
+  }
+
   // Add new contact
   const handleAddPerson = (e) => {
     e.preventDefault()
     // check for person already existing in phonebook
     // if exists; show alert and don't add to phonebook
-    const found = persons.find(person => person.name === newName)
-    if (found) {
-      alert(`${newName} is already present in phonebook`)
+    const foundContact = persons.find(person => person.name === newName)
+    if (foundContact) {
+      const confirm = window.confirm(`${newName} is already added to phonebook.\nReplace the old number with new one?`)
+      if (confirm) {
+        updateContact()
+      }
     } else {
       const newPersonObject = {
         name: newName,
